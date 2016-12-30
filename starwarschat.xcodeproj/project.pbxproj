@@ -8,23 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		88315BB91E15E44600EAFB9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88315BB81E15E44600EAFB9B /* AppDelegate.swift */; };
-		88315BBB1E15E44600EAFB9B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88315BBA1E15E44600EAFB9B /* ViewController.swift */; };
+		88315BBB1E15E44600EAFB9B /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88315BBA1E15E44600EAFB9B /* MessagesController.swift */; };
 		88315BC01E15E44600EAFB9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88315BBF1E15E44600EAFB9B /* Assets.xcassets */; };
 		88315BC31E15E44600EAFB9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88315BC11E15E44600EAFB9B /* LaunchScreen.storyboard */; };
-		88315BCD1E15E4E800EAFB9B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88315BCC1E15E4E800EAFB9B /* GoogleService-Info.plist */; };
 		88883C081E16CAE300CA8DF1 /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88883C071E16CAE300CA8DF1 /* loginViewController.swift */; };
+		88883C0A1E16EBD500CA8DF1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88883C091E16EBD500CA8DF1 /* GoogleService-Info.plist */; };
 		A3B2914A6352ADAF2EF85BCB /* Pods_starwarschat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E40D98EC2CFA7105C3190672 /* Pods_starwarschat.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		88315BB51E15E44600EAFB9B /* starwarschat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = starwarschat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88315BB81E15E44600EAFB9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		88315BBA1E15E44600EAFB9B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = starwarschat/ViewController.swift; sourceTree = "<group>"; };
+		88315BBA1E15E44600EAFB9B /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessagesController.swift; path = starwarschat/MessagesController.swift; sourceTree = "<group>"; };
 		88315BBF1E15E44600EAFB9B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88315BC21E15E44600EAFB9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		88315BC41E15E44600EAFB9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		88315BCC1E15E4E800EAFB9B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		88883C071E16CAE300CA8DF1 /* loginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
+		88883C091E16EBD500CA8DF1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CC5F685FABFF01DEAC50709C /* Pods-starwarschat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-starwarschat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-starwarschat/Pods-starwarschat.debug.xcconfig"; sourceTree = "<group>"; };
 		E40D98EC2CFA7105C3190672 /* Pods_starwarschat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_starwarschat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9784A8AE799614A4DC01D30 /* Pods-starwarschat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-starwarschat.release.xcconfig"; path = "Pods/Target Support Files/Pods-starwarschat/Pods-starwarschat.release.xcconfig"; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 				88315BBF1E15E44600EAFB9B /* Assets.xcassets */,
 				88315BC11E15E44600EAFB9B /* LaunchScreen.storyboard */,
 				88315BC41E15E44600EAFB9B /* Info.plist */,
-				88315BCC1E15E4E800EAFB9B /* GoogleService-Info.plist */,
+				88883C091E16EBD500CA8DF1 /* GoogleService-Info.plist */,
 			);
 			path = starwarschat;
 			sourceTree = "<group>";
@@ -93,7 +93,7 @@
 		888D13371E16C7E0007A3D18 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				88315BBA1E15E44600EAFB9B /* ViewController.swift */,
+				88315BBA1E15E44600EAFB9B /* MessagesController.swift */,
 				88883C071E16CAE300CA8DF1 /* loginViewController.swift */,
 			);
 			name = view;
@@ -171,8 +171,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				88315BC31E15E44600EAFB9B /* LaunchScreen.storyboard in Resources */,
-				88315BCD1E15E4E800EAFB9B /* GoogleService-Info.plist in Resources */,
 				88315BC01E15E44600EAFB9B /* Assets.xcassets in Resources */,
+				88883C0A1E16EBD500CA8DF1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,7 +231,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88315BBB1E15E44600EAFB9B /* ViewController.swift in Sources */,
+				88315BBB1E15E44600EAFB9B /* MessagesController.swift in Sources */,
 				88315BB91E15E44600EAFB9B /* AppDelegate.swift in Sources */,
 				88883C081E16CAE300CA8DF1 /* loginViewController.swift in Sources */,
 			);

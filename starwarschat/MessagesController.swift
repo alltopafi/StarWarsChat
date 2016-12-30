@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ViewController: UITableViewController {
+class MessagesController: UITableViewController {
     
     
     override func viewDidLoad() {
@@ -17,9 +17,20 @@ class ViewController: UITableViewController {
         self.view.backgroundColor = UIColor.white
     
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
+        
+        if FIRAuth.auth()?.currentUser?.uid == nil {
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+        }
     }
     
     func handleLogout(){
+        
+        do{
+            try FIRAuth.auth()?.signOut()
+        } catch let logoutError {
+            print(logoutError)
+        }
+        
         let loginController = loginViewController()
         present(loginController, animated: true, completion: nil)
     }

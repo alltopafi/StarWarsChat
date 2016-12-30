@@ -10,6 +10,8 @@
 	<string>1026735869239-h3ioe5r13u8tho65c3fglvvddifi8veu.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.1026735869239-h3ioe5r13u8tho65c3fglvvddifi8veu</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDe9WZxj9oet2AGBCniAZCLEOLweTxbWbo</string>
 	<key>GCM_SENDER_ID</key>
 	<string>1026735869239</string>
 	<key>PLIST_VERSION</key>

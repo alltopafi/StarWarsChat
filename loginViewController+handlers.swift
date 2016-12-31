@@ -81,7 +81,7 @@ extension loginViewController: UIImagePickerControllerDelegate, UINavigationCont
                 print(error!)
                 return
             }
-            
+            self.messagesController?.fetchUserAndSetupNavBarTitle()
             self.dismiss(animated: true, completion: nil)
             
         })
@@ -107,9 +107,11 @@ extension loginViewController: UIImagePickerControllerDelegate, UINavigationCont
             
             let imageName = NSUUID().uuidString
             
-            let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).png")
+            let storageRef = FIRStorage.storage().reference().child("profile_images").child("\(imageName).jpg")
             
-            if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
+            
+            
+            if let profileImage = self.profileImageView.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
                 
                 storageRef.put(uploadData, metadata: nil, completion: { (metaData, error) in
                     
@@ -125,9 +127,7 @@ extension loginViewController: UIImagePickerControllerDelegate, UINavigationCont
                         self.registerUserToDatabaseWithUid(uid: uid, values: values as [String : AnyObject])
                     }
                     
-                   
-                    
-                    
+  
                 })
                 
             }
@@ -148,6 +148,12 @@ extension loginViewController: UIImagePickerControllerDelegate, UINavigationCont
             }
             
             print("saved user to db")
+            
+            
+            let user = User()
+            user.setValuesForKeys(values)
+            self.messagesController?.setupNavBarWithUser(user: user)
+            
             self.dismiss(animated: true, completion: nil)
         })
    

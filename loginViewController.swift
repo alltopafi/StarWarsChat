@@ -12,7 +12,7 @@ import Firebase
 class loginViewController: UIViewController {
     
     var ref: FIRDatabaseReference!
-    
+    var messagesController: MessagesController?
     
     lazy var profileImageView: UIImageView = {
         let iv = UIImageView()

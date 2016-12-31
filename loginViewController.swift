@@ -14,13 +14,19 @@ class loginViewController: UIViewController {
     var ref: FIRDatabaseReference!
     
     
-    let profileImageView: UIImageView = {
+    lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(named: "starwarslogo")
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFill
+        
+        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectImageView)))
+        iv.isUserInteractionEnabled = true
+        
         return iv
     }()
+    
+    
     
     lazy var loginRegisterSegmentedControl: UISegmentedControl = {
        let sc = UISegmentedControl(items: ["Login", "Register"])
@@ -31,29 +37,7 @@ class loginViewController: UIViewController {
        return sc
     }()
     
-    func handleLoginRegisterChange(){
-        let title = loginRegisterSegmentedControl.titleForSegment(at: loginRegisterSegmentedControl.selectedSegmentIndex)
-        loginRegisterButton.setTitle(title, for: .normal)
-        
-        inputContainerViewHeightAnchor?.constant =
-            loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 100 : 150
-        
-        nameFieldHeightAnchor?.isActive = false
-        nameFieldHeightAnchor = nameField.heightAnchor.constraint(equalTo: inputContainerView.heightAnchor, multiplier:  loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 0 : 1/3)
-        nameField.placeholder = loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? "" : "Name"
-        nameFieldHeightAnchor?.isActive = true
-        
-        emailFieldHeightAnchor?.isActive = false
-        emailFieldHeightAnchor = emailField.heightAnchor.constraint(equalTo: inputContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 1/2 : 1/3)
-        emailFieldHeightAnchor?.isActive = true
-        
-        passwordFieldHeightAnchor?.isActive = false
-        passwordFieldHeightAnchor = passwordField.heightAnchor.constraint(equalTo: inputContainerView.heightAnchor, multiplier: loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? 1/2 : 1/3)
-        passwordFieldHeightAnchor?.isActive = true
-        
-        
-        
-    }
+
     
     let inputContainerView: UIView = {
         let view = UIView()
@@ -76,65 +60,7 @@ class loginViewController: UIViewController {
         return button
     }()
     
-    func handleLoginRegister() {
-        if loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
-            handleLogin()
-        }else{
-            handleRegister()
-        }
-    }
-    
-    func handleLogin() {
-        guard let email = emailField.text, let password = passwordField.text else {
-            print("not a valid form")
-            return
-        }
-        
-        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
-            if error != nil {
-                print(error!)
-                return
-            }
-            
-            self.dismiss(animated: true, completion: nil)
-            
-        })
-    }
-    
-    
-    func handleRegister(){
-        guard let email = emailField.text, let password = passwordField.text, let name = nameField.text else {
-            print("not a valid form")
-            return
-        }
-      
-        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
-            
-            if error != nil {
-                print(error!)
-                return
-            }
-            
-            guard let uid = user?.uid else {
-                return
-            }
-            
-            //created a new user
-            let ref = FIRDatabase.database().reference()
-            let userRef = ref.child("users").child(uid)
-            let values = ["name": name, "email": email]
-            userRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
-                
-                if err != nil {
-                    print(err!)
-                    return
-                }
-                
-                print("saved user to db")
-                self.dismiss(animated: true, completion: nil)
-            })
-        })
-    }
+
     
     let nameField: UITextField = {
         let tf = UITextField()

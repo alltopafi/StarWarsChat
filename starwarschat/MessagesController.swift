@@ -11,6 +11,7 @@ import Firebase
 
 class MessagesController: UITableViewController {
     
+    let cellId = "cellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,12 +21,109 @@ class MessagesController: UITableViewController {
         
         let image = UIImage(named: "rsz_compose_2x")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleNewMessage))
-       checkIfUserisLoggedIn()
+        
+        checkIfUserisLoggedIn()
+        
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
+        
+        
        
+    }
+    
+    func observeUserMessages() {
+        guard let uid = FIRAuth.auth()?.currentUser?.uid else {
+            return
+        }
+        
+        let ref = FIRDatabase.database().reference().child("user-messages").child(uid)
+        ref.observe(.childAdded, with: { (snapshot) in
+        
+            let messageId = snapshot.key
+            let messagesReference = FIRDatabase.database().reference().child("messages").child(messageId)
+            
+            messagesReference.observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    let message = Message()
+                    message.setValuesForKeys(dictionary)
+                    
+                    if let chatPartnerId = message.chatPartnerId() {
+                        self.messagesDictionary[chatPartnerId] = message
+                        self.messages = Array(self.messagesDictionary.values)
+                        self.messages.sort(by: { (message1, message2) -> Bool in
+                            return (message1.timestamp?.intValue)! > (message2.timestamp?.intValue)!
+                        })
+                    }
+                    
+                    self.timer?.invalidate()
+                    self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
+                    
+                   
+                } 
+                
+                
+            }, withCancel: nil)
+            
+        }, withCancel: nil)
+    }
+    
+    var timer: Timer?
+    
+    func handleReloadTable() {
+        DispatchQueue.main.async( execute: {
+            self.tableView.reloadData()
+        })
+    }
+    
+    var messages = [Message]()
+    var messagesDictionary = [String: Message]()
+    
+        
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let message = messages[indexPath.row]
+        
+        guard let chatPartnerId = message.chatPartnerId() else {
+            return
+        }
+        
+        let ref = FIRDatabase.database().reference().child("users").child(chatPartnerId)
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+        
+            guard let dictionary = snapshot.value as? [String: AnyObject]
+                else {
+                    return
+            }
+            
+            let user = User()
+            user.setValuesForKeys(dictionary)
+            user.id = chatPartnerId
+            self.showChatControllerWithUser(user: user)
+
+            
+        }, withCancel: nil)
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
+        
+        let message = messages[indexPath.row]
+        cell.message = message
+        return cell
     }
     
     func handleNewMessage() {
         let newmessageController = newMessageController()
+        newmessageController.messagesController = self
         let navController = UINavigationController(rootViewController: newmessageController)
         present(navController, animated: true, completion: nil)
     }
@@ -57,7 +155,12 @@ class MessagesController: UITableViewController {
     }
     
     func setupNavBarWithUser(user: User) {
-       // self.navigationItem.title = user.name
+
+        messages.removeAll()
+        messagesDictionary.removeAll()
+        tableView.reloadData()
+        
+        observeUserMessages()
         
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
@@ -100,11 +203,12 @@ class MessagesController: UITableViewController {
         
         self.navigationItem.titleView = titleView
         
-        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
+        
     }
     
-    func showChatController(){
+    func showChatControllerWithUser(user: User){
         let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogController.user = user
         navigationController?.pushViewController(chatLogController, animated: true)
     }
     

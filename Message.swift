@@ -15,6 +15,9 @@ class Message: NSObject {
     var fromId: String?
     var timestamp: NSNumber?
     var text: String?
+    var imageUrl: String?
+    var imageHeight: NSNumber?
+    var imageWidth: NSNumber?
  
     func chatPartnerId() -> String? {
         

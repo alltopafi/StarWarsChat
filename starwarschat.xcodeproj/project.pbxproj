@@ -70,6 +70,7 @@
 		88315BAC1E15E44600EAFB9B = {
 			isa = PBXGroup;
 			children = (
+				88B4D6191E1AD76100722754 /* controller */,
 				887B0C8F1E174B8B00BCDF43 /* Helpers */,
 				888D13371E16C7E0007A3D18 /* view */,
 				888D13361E16C7D8007A3D18 /* model */,
@@ -120,15 +121,22 @@
 		888D13371E16C7E0007A3D18 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				88B4D6131E182F0800722754 /* UserCell.swift */,
+				88B4D6151E187B2100722754 /* ChatMessageCell.swift */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
+		88B4D6191E1AD76100722754 /* controller */ = {
+			isa = PBXGroup;
+			children = (
 				88315BBA1E15E44600EAFB9B /* MessagesController.swift */,
 				88883C0B1E170DEA00CA8DF1 /* newMessageController.swift */,
 				88883C071E16CAE300CA8DF1 /* loginViewController.swift */,
 				88D9F2B71E171F3C0081E7F7 /* loginViewController+handlers.swift */,
 				887B0C921E17618500BCDF43 /* ChatLogController.swift */,
-				88B4D6131E182F0800722754 /* UserCell.swift */,
-				88B4D6151E187B2100722754 /* ChatMessageCell.swift */,
 			);
-			name = view;
+			name = controller;
 			sourceTree = "<group>";
 		};
 		F39ED57FDD4F75D8EDA67E26 /* Frameworks */ = {
